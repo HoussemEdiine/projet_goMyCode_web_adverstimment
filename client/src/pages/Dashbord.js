@@ -23,6 +23,7 @@ function Dashbord() {
          api.get('/products',{headers:{user}})
          .then(data=>{setproduct(data.data.product)
             setstatus(data.request.status)}   )
+            .catch(err =>alert(err.response.data))
          }
      }, [])
      const products = product.filter(el =>{

@@ -6,6 +6,7 @@ const user = localStorage.getItem('user')
 export const getproduct = () =>(dispatch) =>{
     api.get('/products',{headers:{user}})
        .then(data=>(dispatch({type: GET_PRODUCT , payload : data.data.product})))
+       .catch(err =>alert(err.response.data.msg))
 }
 export const deltproduct = (id) => (dispatch) =>{
       

@@ -16,7 +16,7 @@ module.exports = {
                 lastname,
                 password:hashPassword,
                 email,
-                role
+                role:0
             }) 
             console.log(user.role)
          return res.json({

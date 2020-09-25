@@ -11,22 +11,15 @@ function Registration({history}) {
     const handleSubmit = async (evt) =>{
         evt.preventDefault()
    const response = await  api.post('/register',{email , password,firstname,lastname})
-   const userId  = response.data._id 
-   if(userId){
-       localStorage.setItem('user', userId)
+
        history.push('/')
    } 
-   else{
-       const {message } = response.data
-       
-        console.log(message)
-   }  
-      
- 
-    }
-    
+   
+     
 
     return (
+      <div className='logincontainer'>
+      <div className="login">
         <Form>
           <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
           <Label for="exampleEmail" className="mr-sm-2">firstname</Label>
@@ -46,9 +39,10 @@ function Registration({history}) {
         </FormGroup>
       
         
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit}>register</Button>
       </Form>
-
+</div>
+</div>
     )
 }
 

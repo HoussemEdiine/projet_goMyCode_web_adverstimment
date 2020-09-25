@@ -4,6 +4,7 @@ import Login from './pages/Login';
 import Dashbord from './pages/Dashbord';
 import  Registration from './pages/Registration'
 import Products from './pages/Products'
+import Privateroute from './pages/Privateroute'
 import Myproduct from './pages/Myproduct'
 import DisplayData from './pages/reduxdata'
 import Navig from './pages/Navbar'
@@ -23,7 +24,7 @@ export default function Routes() {
 
         <Switch>
          <Route path='/login' exact component={Login}/>
-         <Route path='/dashbord' component={Dashbord}/>
+         <Privateroute path='/dashbord' component={Dashbord}/>
          <Route path='/register' exact component={Registration} />
          <Route path='/product'exact component={Products}/>
          <Route path='/myproduct' exact component={Myproduct}/>

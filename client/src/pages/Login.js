@@ -10,10 +10,9 @@ function Login({history}) {
 
  const  dispatch = useDispatch()
  const data = useSelector(state => state.Userreducer)
+
  const [email , setEmail]=useState('')
  const [password , setPassword]=useState('')
-
- const user = localStorage.getItem('user')
  const handleSubmit  = async (evt) => {
    evt.preventDefault()
        await dispatch(singin(email,password,history))
@@ -24,30 +23,30 @@ function Login({history}) {
  const handleChange = (e) =>{
      setEmail(e.target.value)
   }
-  localStorage.setItem('user',data.token)
-  localStorage.setItem('Userid', data.id)
-    if(data.token){
-     window.location='/dashbord'
+  
     
-      
+  
+  /// auth
+  if(data.token){
+     window.location='/dashbord'
     }
 
    
-  console.log(data.token)
+          console.log(data.token)
  
 
  
     return (
       
-      <div className="App">
-      <div style={{border:'2px solid black',width :'350px',display:'flex',flexWrap:'wrap',justifyContent:"center",marginLeft:'670px',marginTop:'150px',backgroundColor:'burlywood'}}> 
+      <div className="logincontainer">
+      <div className="login"> 
         <Form  onSubmit={handleSubmit}>
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="exampleEmail" className="mr-sm-2">Email</Label>
+          <Label for="email" className="tml-label">Email</Label>
           <Input type="email" name="email" value={email}   onChange={handleChange}  placeholder="something@idk.cool" />
         </FormGroup>
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="examplePassword" className="mr-sm-2">Password</Label>
+          <Label for="Password" className="tml-label">Password</Label>
           <Input type="password" value={password} name="password" placeholder="don't tell!" onChange={(e)=>setPassword(e.target.value)} />
         </FormGroup>
         <div style={{marginTop:'10px',alignItems:'center'}}>
