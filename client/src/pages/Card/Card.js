@@ -4,11 +4,10 @@ import {deltproduct, editproduct} from '../../js/action/action'
 import {userdislay} from '../../js/action/actionUser'
 import{Button} from 'reactstrap'
 import './MovieCard.css'
-import api from '../../service/api'
-import{adminusers} from '../../js/action/actionUser'
+import icons from 'glyphicons'
 
 
-function Card({products :{_id, name , discription , price ,img_url ,category,user},userid}) {
+function Card({products :{_id, name , discription , price ,img_url ,category,user,tel , region},userid}) {
       const User  = localStorage.getItem('user')
       const r= localStorage.getItem('role')
       const dispatch = useDispatch()
@@ -19,7 +18,7 @@ function Card({products :{_id, name , discription , price ,img_url ,category,use
       const username =  useSelector(state => state.Nameuserreducer)
       const removeItem = (_id) => {
         dispatch(deltproduct(_id))
-        window.location.reload(true)
+       // window.location.reload(true)
       }
       useEffect(()=>{
          dispatch(userdislay(_id,User))
@@ -36,7 +35,7 @@ const confirmPrice = () =>{
  dispatch(editproduct(_id,name,prix))
   }
   seteditprix(!editprix)
-  window.location='/dashbord'
+ //window.location='/dashbord'
 }
 
 //   edit name 
@@ -46,9 +45,13 @@ const confirming = () =>{
   }
      setedition(false)
      settext('')
-     window.location="/dashbord"
+  //  window.location="/dashbord"
      
 }
+
+
+
+
     return (
       <>
       
@@ -56,22 +59,24 @@ const confirming = () =>{
       <div className='movie'>
       
         <div className='movie-img'>
-        {userid===user || r == 1 ? <Button onClick={()=>removeItem(_id)} color="danger">Delete</Button> : ""}
+    {userid===user || r == 1 ? <Button onClick={()=>removeItem(_id)} color="danger">{icons.cancel}</Button> : ""}
           <img alt='movie poster' src={img_url} />
         </div>
         <div className='text-movie-cont'>
           <div className='mr-grid'>
             <div className='col1'>
-          {edition ?<> <input defaultValue={name} placeholder='typiing' onChange={(e)=>settext(e.target.value)}/><button onClick={confirming}>confirm</button></>
-             :<div><h3 style={{textDecorationStyle:'solid'}}>{name}</h3> {userid === user || r==1? <Button color="danger" onClick={editing}>edit</Button>:""}</div>
+    {edition ?<> <input defaultValue={name} placeholder='typiing' onChange={(e)=>settext(e.target.value)}/><button onClick={confirming}>{icons.ok}</button></>
+             :<div><span style={{textDecorationStyle:'solid',color:'red'}}>{name}</span> {userid === user || r==1? <Button color="danger" onClick={editing}>{icons.pencil}</Button>:""}</div>
             
               }
               <ul className='movie-gen'>
-                 <p>{discription}</p>
+                 <p>discription: {discription}</p>
+                 
               </ul>
             </div>
             <div className='col2'>
-    <h3>userID: {user}</h3>
+            <h3>region : {region} </h3>
+                 <h3>tel : {tel} </h3>
             </div>
           </div>
          
@@ -80,10 +85,10 @@ const confirming = () =>{
      editprix ? <> <input placeholder='new price' defaultValue={price} 
      onChange={(e)=>setprix(e.target.value)}
          />
-      {<button onClick={confirmPrice}>EditPrix</button>} </> :
+      {<button onClick={confirmPrice}>{icons.ok}</button>} </> :
      <div>       
-    <h2>Price: {price}$</h2>
-    { userid === user  || r==1 ? <img src={'icons8-edit-property-40.png'} style={{width:"20px" , height:"20px" , marginTop:'-10px'}}  onClick={editprice}/>:""}
+    <span style={{textDecorationStyle:'solid',color:'red'}}>Price: {price}$</span>
+     { userid === user  || r==1 ? <Button  color='danger' onClick={editprice}>{icons.pencil}</Button>:""}
     <h3>{category}</h3>
     </div>
      }     

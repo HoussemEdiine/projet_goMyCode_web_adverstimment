@@ -1,32 +1,22 @@
 import React , {useState,useEffect,}  from 'react'
 import {useHistory} from 'react-router-dom'
-import  {Button, Input} from 'reactstrap'
+import  {Button} from 'reactstrap'
+import {Input} from  'reactstrap'
 import {useDispatch,useSelector} from 'react-redux'
 import api from '../service/api'
 import Card from './Card/Card'
 import {adminusers} from '../js/action/actionUser'
+import icons from 'glyphicons'
 
 
-function Dashbord() {
+function Dashbord({produit}) {
+ 
   const userid = localStorage.getItem('Userid')
   const user = localStorage.getItem('user')
-    //states
-   const [product,setproduct]=useState([])
-   const [status , setstatus]=useState(0)
-   const [search ,setsearch] = useState("")
-   
    const history = useHistory()
-       
-     useEffect(() => {
-        console.log('this is '+user)
-        if(user!==null){
-         api.get('/products',{headers:{user}})
-         .then(data=>{setproduct(data.data.product)
-            setstatus(data.request.status)}   )
-            .catch(err =>alert(err.response.data))
-         }
-     }, [])
-     const products = product.filter(el =>{
+   const [search ,setsearch] = useState("")   
+    
+     const products = produit.filter(el =>{
        return el.name.toLowerCase().includes(search.toLowerCase())
      })
           
@@ -41,11 +31,17 @@ function Dashbord() {
 //}
 
 
-
     return (
     <React.Fragment>
+    
+
         {user ? <div>
-            <h1 style={{alignItems:'center'}}>All Products</h1>
+          <div className="w3-panel w3-metro-blue">
+
+          
+          <Input placeholder='searching....' value={search} onChange={(e)=>setsearch(e.target.value)} style={{width:'500px',marginLeft:'500px',marginTop:"20px"}}/>
+
+</div>
 <div style={{
             display: 'flex',
             flex: 'column',
@@ -53,15 +49,13 @@ function Dashbord() {
             flexWrap: 'wrap',
           }}>
                      
-        <Input placeholder='searching....' value={search} onChange={(e)=>setsearch(e.target.value)} 
-              
-              /> 
+        
               
          { products.map((el)=>(
            
          <div>
            
-        <Card  products={el}  userid={userid}/>
+          <Card  products={el}  userid={userid}/>
 
         
         

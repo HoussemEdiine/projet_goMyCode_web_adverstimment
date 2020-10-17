@@ -5,12 +5,16 @@ import api from '../service/api'
 
 function Products() {
     // product state useState('')
+    const cate =['gaming','smartphones','laptop']
+    const localregion =['Ariana','Béja','Ben Arous','Bizerte','Gabès','Gafsa','Jendouba','Kairouan','Kasserine','Kebili','Kef','Mahdia','	Manouba','Medenine','Monastir','Nabeul','Sfax','Tunis']
     const [img , setImg]=useState(null)
     const[name,setName]=useState('')
     const [discription , setDiscription]=useState('')
-    const [category , setCategoty] = useState('')
-    const[price , setPrice] = useState(0)
+    const [category , setCategoty] = useState('cat')
+    const[price , setPrice] = useState(null)
     const [date , setDate] =useState('')
+    const [tel , settel]=useState(null)
+    const [region , setrigion]=useState('')
     const [id ,setid] = useState(null)
     //user matter
     const [usersession , setusersession]=useState(null)
@@ -37,11 +41,17 @@ const handlesubmit = async ev =>{
      productData.append('discription',discription)
      productData.append('price',price)
      productData.append('category',category)
+     productData.append("date",date)
+     productData.append('region',region)
+     productData.append('tel',tel)
      if(name!=="" && 
         discription !=="" &&
         category !==""
         && date !=="" &&
-        img !== null)
+        img !== null   && region !=='')
+        {
+          return alert('try again')
+        }
         {
          await api.post('/product',productData,{ headers :{ user }})   
         }
@@ -51,6 +61,7 @@ const handlesubmit = async ev =>{
         setDiscription('')
         setCategoty('')
         setDate('')
+        settel('')
      history.push('/Dashbord')   
 }
 // fetching data from data
@@ -77,35 +88,21 @@ if(usersession===403){
 },[usersession])
 
 // session control
-
-   // logout function
-    const logout =  () =>{
-       localStorage.removeItem('user')
-       localStorage.removeItem('userid')
-       history.push('/login')
-     }
-
   
    
 
       
  // 
-
+console.log(category)
 
     return (
-      <Container>
+      <div className='productcontainer'>
         
 { user ?
   
 
         (<Form>
-          <div>{
-
-           username ? <h1>{username}</h1> : <Spinner color="primary" /> }
-            <Button color='danger' onClick={logout}>Logout</Button>
-          </div>
-          
-            <h2>adding product</h2>
+            <h1 style={{color:'red'}}>adding product</h1>
              <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
           <Label  className="mr-sm-2">product image</Label>
           <Input type="file"  onChange={(e)=>setImg(e.target.files[0])}/>
@@ -124,18 +121,42 @@ if(usersession===403){
         </FormGroup>
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
           <Label for="exampleEmail" className="mr-sm-2">category</Label>
-          <Input type="text" placeholder="category"  value={category} onChange={(e)=>setCategoty(e.target.value)}/>
+          <select class="form-control" id="exampleFormControlSelect1"  onChange={(e =>setCategoty(e.target.value))}>
+          <option selected>Select Category</option>
+       {cate.map(el =>(
+        <option value={el}>{el}</option> 
+       ))
+      
+}
+    </select>
         </FormGroup>
-        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">  
           <Label  className="mr-sm-2">Date</Label>
           <Input type="date" value={date} onChange={(e)=>setDate(e.target.value)} />
         </FormGroup>
+        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+          <Label className="mr-sm-2">phone</Label>
+          <Input type="phone"   placeholder="phone"  value={tel} onChange={(e)=>settel(e.target.value)}/>
+        </FormGroup>
+
+        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+          <Label for="exampleEmail" className="mr-sm-2">region</Label>
+          <select class="form-control" id="exampleFormControlSelect1"  onChange={(e =>setrigion(e.target.value))}>
+          <option selected>Select Region</option>
+       {localregion.map(el =>(
+        <option value={el}>{el}</option> 
+       ))
+      
+}
+    </select>
+        </FormGroup>
         
-        <Button onClick={handlesubmit}>Submit</Button>
+        
+        <Button onClick={handlesubmit} color='danger' style={{marginTop:'10px'}}>Save</Button>
       </Form>):
       history.push('/login')
 }
-      </Container>
+      </div>
     )
     
 }

@@ -1,7 +1,24 @@
 import React,{useState} from 'react'
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Form, Label} from 'reactstrap';
 import api from '../service/api'
+import { Input ,Button,FormGroup} from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 
+
+function Copyright() {
+return (
+  <Typography variant="body2" color="textSecondary" align="center">
+    {'Copyright © '}
+    <Link color="inherit" href="https://material-ui.com/">
+      Your Website
+    </Link>{' '}
+    {new Date().getFullYear()}
+    {'.'}
+  </Typography>
+);
+}
 function Registration({history}) {
     const [email , setEmail]=useState('')
     const [password , setPassword]=useState('')
@@ -10,7 +27,8 @@ function Registration({history}) {
 
     const handleSubmit = async (evt) =>{
         evt.preventDefault()
-   const response = await  api.post('/register',{email , password,firstname,lastname})
+    api.post('/register',{email , password,firstname,lastname})
+    .catch(err => alert(err.response.data.message))
 
        history.push('/')
    } 
@@ -35,12 +53,14 @@ function Registration({history}) {
         </FormGroup>
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
           <Label for="examplePassword" className="mr-sm-2">Password</Label>
-          <Input type="password" value={password} name="password" placeholder="don't tell!" onChange={(e)=>setPassword(e.target.value)} />
+          <Input  type="password" value={password} name="password" placeholder="don't tell!" onChange={(e)=>setPassword(e.target.value)} />
         </FormGroup>
       
         
-        <Button onClick={handleSubmit}>register</Button>
+        <Button onClick={handleSubmit}   style={{marginTop:'15px'}} variant="contained" color="primary">register</Button>
       </Form>
+      
+      
 </div>
 </div>
     )

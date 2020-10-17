@@ -4,9 +4,11 @@ name : String ,
 discription:String,
 price : Number,
 img : String,
-category : String
+category : String,
+tel : Number,
+region : String
 ,
-date : Date,
+date :{type: Date , default:Date.now},
 user :{
  type:mongoose.Schema.Types.ObjectId,
  ref :'User'

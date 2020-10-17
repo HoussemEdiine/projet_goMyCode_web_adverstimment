@@ -11,7 +11,7 @@ module.exports = {
         else{
             try {
     
-            const {name,discription,price,category}=req.body
+            const {name,discription,price,category,date,tel,region}=req.body
             const {filename} = req.file
            
             const user = await User.findById(authData.user._id)
@@ -27,7 +27,11 @@ module.exports = {
                 price,
                 user:authData.user._id,
                 img : filename,
-                category
+                category ,
+                date,
+                tel ,
+                region
+            
             })
             if(product){
                 return res.json({authData , product})
@@ -135,9 +139,21 @@ try {
 
     }  , 
     
-    edit(req,res){
-
+    getproduithome(req,res){
+        try { const product =  Prouct.find({})
+            
+        if(product){
+            return res.json({product})
+        }
+             
+        } catch (error) {
+            return res.status(400).json({
+                message:'nothing found...'
+            })
+        }
     }
+
+    
 
 
     }        

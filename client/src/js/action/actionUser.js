@@ -25,7 +25,7 @@ export const adminusers =(user,userid) => async (dispatch)=>{
 }
 
 export const adminrole = (id,user) => async (dispatch) =>{
- const data = await  api.get(`/user/${id}`,{headers:{user : user}})
-  .then(data =>(dispatch({type:ROLE_USERS , payload:data.data.authData.user.role})))
+  await  api.get(`/user/${id}`,{headers:{user : user}})
+  .then(data =>(dispatch({type:ROLE_USERS , payload:{role: data.data.authData.user.role}})))
   
 }

@@ -27,6 +27,11 @@ routes.get('/user/:userid',verifyToken,LoginController.getUsername)
 routes.post('/login',LoginController.userLogin)
 
 //produit
+routes.get('/home', async (req,res)=>{
+    const getAll = await Product.find()
+    
+    res.status(200).json(getAll)
+})
 routes.get('/products',verifyToken,ProductController.getAllProducts)
 routes.get('/products/:category',verifyToken,ProductController.getByCategory)
 routes.get('/product/:productid',ProductController.getProductByid)

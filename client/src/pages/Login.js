@@ -1,10 +1,12 @@
 import React , { useState,useEffect} from 'react'
 import {useDispatch,useSelector} from  "react-redux"
 import{Redirect} from 'react-router-dom'
-import { Button, Form, FormGroup, Label, Input ,Container} from 'reactstrap';
+import { Form} from 'reactstrap';
 import {singin, userID} from '../js/action/actionUser'
 import {Spinner} from 'reactstrap'
+import { Input ,Button, FormGroup ,InputLabel,TextField } from '@material-ui/core';
 //import api from '../service/api'
+import icons from 'glyphicons'
 
 function Login({history}) {
 
@@ -39,22 +41,29 @@ function Login({history}) {
     return (
       
       <div className="logincontainer">
+      
       <div className="login"> 
         <Form  onSubmit={handleSubmit}>
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="email" className="tml-label">Email</Label>
-          <Input type="email" name="email" value={email}   onChange={handleChange}  placeholder="something@idk.cool" />
-        </FormGroup>
+         <p><b> {icons.door} Login for selling</b></p>
+          </FormGroup>
         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-          <Label for="Password" className="tml-label">Password</Label>
-          <Input type="password" value={password} name="password" placeholder="don't tell!" onChange={(e)=>setPassword(e.target.value)} />
+         <TextField type="email"  variant='outlined' label="email" name="email" value={email}   onChange={handleChange}/>
         </FormGroup>
-        <div style={{marginTop:'10px',alignItems:'center'}}>
-           <Button type='submit'>Login</Button>
-        <Button onClick={()=>history.push('/register')} style={{marginLeft:'20px'}} >Register</Button>
-        </div>
+        <FormGroup className="mb-2 mr-sm-2 mb-sm-0" style={{marginTop:'10px'}}>
+          <TextField type='password' id="outlined-basic" label="Password" variant="outlined"  value={password} name="password"  onChange={(e)=>setPassword(e.target.value)} />
+          </FormGroup>
        
+        <div style={{marginTop:'10px',alignItems:'center'}}>
+
+           <Button type='submit'  variant="contained" color="primary" >Login</Button>
+        <Button onClick={()=>history.push('/register')} style={{marginLeft:'20px'}} variant="contained" color="primary" >Register</Button>
+        </div>
+
+        <div style={{marginTop:'20px',alignItems:'center'}}>
+       </div>
       </Form>
+      
      </div>
     
     </div>
